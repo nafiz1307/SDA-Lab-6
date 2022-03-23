@@ -1,0 +1,57 @@
+title Lab 6
+
+User->Application:Register
+
+
+
+database #blue:1 Database #red
+Application->Database:Create
+Database->Database: Invoke
+Database-->Application:New User Created
+
+par Till User Search
+User->Application:Search Pizza
+Application->Database:Lookup Pizza
+Database->Database:Search
+Database-->Application: Return Result
+end
+
+participant Payment Gateway
+participant Pizza Shop
+participant Web Application
+participant Shop Manager
+participant Pizza Shop
+
+
+User->Application: Add Pizza to Cart
+User->Application: Provide Delivery Address
+
+Application->Database: Store Delivery Address for registered user
+Database->Database: Store
+Database->Application: Stored Successfully
+
+alt case 1: Debit Card
+User->Application:Card Holder name,Card Number,Expiry Date
+User->Application:Store Payment info if registered user
+Application->Payment Gateway:Validate information
+Payment Gateway->Payment Gateway: Validate
+Payment Gateway->Application: Payment Successful
+else case 2 : Mkash
+User->Application:Name,Mobile Number
+Application->Payment Gateway:Validate information
+Payment Gateway->Payment Gateway: Validate
+Payment Gateway->Application: Payment Successful
+end
+
+User->Application:Place Order
+Application->Pizza Shop: Order Notification
+Pizza Shop->Database: Register Shop
+Database->Database: Register
+Database->Pizza Shop: Added Successfully
+
+Shop Manager->Web Application: View Order
+Web Application->Shop Manager: Show Orders
+
+
+
+
